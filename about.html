@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Moonboy Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Who We Are ── */
+    .about-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .about-intro-visual {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(59,130,246,0.06));
+      border: 1px solid var(--border);
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-intro-visual::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(139,92,246,0.06) 60deg, transparent 120deg);
+      animation: spin 12s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .about-visual-emoji {
+      font-size: 5rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 30px rgba(139,92,246,0.5));
+    }
+
+    /* ── Mission ── */
+    .mission-card {
+      background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(59,130,246,0.05));
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mission-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 200px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+    }
+
+    .mission-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--text-primary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .mission-quote span { color: var(--purple-light); }
+
+    /* ── Differentiators ── */
+    .diff-item {
+      display: flex;
+      gap: 20px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .diff-item:hover {
+      border-color: rgba(139,92,246,0.25);
+      background: var(--bg-card-hover);
+    }
+
+    .diff-num {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--purple-light);
+      opacity: 0.4;
+      min-width: 32px;
+    }
+
+    .diff-item h3 { font-size: 1rem; margin-bottom: 6px; }
+    .diff-item p  { color: var(--text-secondary); font-size: 0.88rem; font-family: var(--font-text); }
+
+    /* ── Team Cards ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+
+    .team-card:hover {
+      border-color: rgba(139,92,246,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 25px rgba(139,92,246,0.12);
+    }
+
+    .team-card:hover::after { transform: scaleX(1); }
+
+    .team-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1));
+      border: 2px solid rgba(139,92,246,0.25);
+    }
+
+    .team-card h3 {
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--purple-light);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .team-name {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .team-name.hiring { color: var(--text-muted); font-style: italic; }
+
+    .team-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: var(--font-text);
+      line-height: 1.6;
+    }
+
+    .team-badge {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-lead {
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.3);
+      color: var(--purple-light);
+    }
+
+    .badge-open {
+      background: rgba(6,182,212,0.1);
+      border: 1px solid rgba(6,182,212,0.25);
+      color: var(--cyan);
+    }
+
+    @media (max-width: 1100px) { .team-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 900px)  { .about-intro-grid { grid-template-columns: 1fr; gap: 40px; } .team-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 540px)  { .team-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div id="main-content" class="main">
+
+  <!-- ── Page Hero ── -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label fade-up">About Us</div>
+      <h1 class="fade-up delay-1">Who Is <span class="gradient-text">Moonboy Studio</span>?</h1>
+      <p class="fade-up delay-2" style="color:var(--text-secondary); max-width:580px; margin:20px auto 0; font-family:var(--font-text); font-size:1.05rem; line-height:1.8;">A digital agency born from gaming culture — built to serve the next generation of esports creators and tournament organizers.</p>
+    </div>
+  </section>
+
+  <!-- ── Who We Are ── -->
+  <section>
+    <div class="container">
+      <div class="about-intro-grid">
+        <div class="fade-up">
+          <div class="glow-line"></div>
+          <div class="section-label">Who We Are</div>
+          <h2 style="margin-bottom:20px;">Professionals Who <span class="gradient-text">Actually Game</span></h2>
+          <p style="color:var(--text-secondary); font-family:var(--font-text); line-height:1.8; margin-bottom:20px;">Moonboy Studio is a digital agency focused on helping gaming communities, tournament hosts, and creators build professional systems.</p>
+          <p style="color:var(--text-secondary); font-family:var(--font-text); line-height:1.8;">We're not a generic web agency that stumbled into gaming — we're gamers who mastered our craft to serve the community we love. Every solution we build comes from real understanding of what tournament organizers and gaming communities actually need.</p>
+        </div>
+        <div class="fade-up delay-1">
+          <div class="about-intro-visual">
+            <div class="about-visual-emoji">🎮</div>
+            <div style="position:relative; z-index:1; margin-top: 24px;">
+              <div style="font-family:var(--font-display); font-size:0.9rem; letter-spacing:0.1em; color:var(--purple-light);">MOONBOY STUDIO</div>
+              <div style="color:var(--text-muted); font-size:0.8rem; margin-top:6px;">Est. 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Our Mission ── -->
+  <section>
+    <div class="container">
+      <div class="fade-up" style="text-align:center; margin-bottom:48px;">
+        <div class="section-label">Our Mission</div>
+        <h2>Why We <span class="gradient-text">Exist</span></h2>
+      </div>
+      <div class="mission-card fade-up">
+        <p class="mission-quote">"To deliver <span>high-quality, fast, and reliable</span> digital solutions for esports and online communities — so creators can focus on what matters: the game."</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── What Makes Us Different ── -->
+  <section>
+    <div class="container">
+      <div class="fade-up" style="text-align:center; margin-bottom:48px;">
+        <div class="section-label">Our Edge</div>
+        <h2>What Makes Us <span class="gradient-text">Different</span></h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:16px; max-width:720px; margin:0 auto;">
+        <div class="diff-item fade-up">
+          <div class="diff-num">01</div>
+          <div>
+            <h3>Gamer-Focused Mindset</h3>
+            <p>We understand the gaming world from the inside. We know what the community expects, what creates trust, and what drives engagement in competitive spaces.</p>
+          </div>
+        </div>
+        <div class="diff-item fade-up delay-1">
+          <div class="diff-num">02</div>
+          <div>
+            <h3>All-In-One Service</h3>
+            <p>Discord setup, website development, graphic design, video editing — handled under one roof. No juggling multiple vendors or losing your brand vision in translation.</p>
+          </div>
+        </div>
+        <div class="diff-item fade-up delay-2">
+          <div class="diff-num">03</div>
+          <div>
+            <h3>Clean and Professional Execution</h3>
+            <p>No templates, no shortcuts. Every deliverable is built with intention — polished, performant, and designed to represent your brand at its highest level.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Team ── -->
+  <section>
+    <div class="container">
+      <div class="fade-up" style="text-align:center; margin-bottom:56px;">
+        <div class="section-label">The Team</div>
+        <h2>Meet The <span class="gradient-text">Studio</span></h2>
+        <p style="color:var(--text-secondary); margin-top:12px; font-family:var(--font-text);">The people (and open roles) behind Moonboy Studio.</p>
+      </div>
+      <div class="team-grid">
+
+        <!-- Head of Developer -->
+        <div class="team-card fade-up">
+          <div class="team-avatar">👑</div>
+          <h3>Head of Developer</h3>
+          <div class="team-name">Yone</div>
+          <p class="team-desc">Leads all development projects, ensures clean and efficient code, manages website systems and technical structure.</p>
+          <span class="team-badge badge-lead">Lead</span>
+        </div>
+
+        <!-- Frontend Developer -->
+        <div class="team-card fade-up delay-1">
+          <div class="team-avatar">🖥️</div>
+          <h3>Frontend Developer</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Builds user interfaces, designs layouts, and ensures the website looks modern, smooth, and responsive.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+        <!-- Backend Developer -->
+        <div class="team-card fade-up delay-2">
+          <div class="team-avatar">⚙️</div>
+          <h3>Backend Developer</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Handles server logic, databases, and ensures all systems run smoothly behind the scenes.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+        <!-- UI/UX Designer -->
+        <div class="team-card fade-up delay-3">
+          <div class="team-avatar">✏️</div>
+          <h3>UI/UX Designer</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Designs user experience, layout structure, and visual flow to ensure the website is easy to use and visually appealing.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+        <!-- Graphic Designer -->
+        <div class="team-card fade-up">
+          <div class="team-avatar">🎨</div>
+          <h3>Graphic Designer</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Creates posters, branding assets, and visual content for tournaments and promotions.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+        <!-- Video Editor -->
+        <div class="team-card fade-up delay-1">
+          <div class="team-avatar">🎬</div>
+          <h3>Video Editor</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Produces highlight videos, promotional edits, and engaging content for social media.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+        <!-- Community Manager -->
+        <div class="team-card fade-up delay-2">
+          <div class="team-avatar">💬</div>
+          <h3>Community Manager</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Manages Discord servers, engages with users, and ensures a smooth and active community environment.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+        <!-- Marketing Specialist -->
+        <div class="team-card fade-up delay-3">
+          <div class="team-avatar">📈</div>
+          <h3>Marketing Specialist</h3>
+          <div class="team-name hiring">Hiring</div>
+          <p class="team-desc">Handles promotion strategies, social media growth, and outreach to expand audience reach.</p>
+          <span class="team-badge badge-open">Open Role</span>
+        </div>
+
+      </div>
+      <div style="text-align:center; margin-top:48px;" class="fade-up">
+        <p style="color:var(--text-secondary); font-family:var(--font-text); margin-bottom:20px;">Interested in joining the team? Reach out on Discord.</p>
+        <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-primary">Apply on Discord →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="components.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
