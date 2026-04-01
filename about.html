@@ -185,6 +185,13 @@
       letter-spacing: 0.08em;
     }
 
+    .badge-founder {
+      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.15));
+      border: 1px solid rgba(139,92,246,0.45);
+      color: var(--purple-light);
+      box-shadow: 0 0 12px rgba(139,92,246,0.2);
+    }
+
     .badge-lead {
       background: rgba(139,92,246,0.15);
       border: 1px solid rgba(139,92,246,0.3);
@@ -300,6 +307,15 @@
         <p style="color:var(--text-secondary); margin-top:12px; font-family:var(--font-text);">The people (and open roles) behind Moonboy Studio.</p>
       </div>
       <div class="team-grid">
+
+        <!-- Founder — spans full row to stand out -->
+        <div class="team-card founder-card fade-up" style="grid-column: 1 / -1; max-width: 340px; margin: 0 auto 8px;">
+          <div class="team-avatar" style="background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(59,130,246,0.15)); border-color: rgba(139,92,246,0.5); box-shadow: 0 0 24px rgba(139,92,246,0.25);">🌙</div>
+          <h3 style="color: var(--purple-light);">Founder</h3>
+          <div class="team-name">Moonboy</div>
+          <p class="team-desc">Founder of Moonboy Studio, responsible for vision, direction, and overall leadership of the agency.</p>
+          <span class="team-badge badge-founder">Founder</span>
+        </div>
 
         <!-- Head of Developer -->
         <div class="team-card fade-up">

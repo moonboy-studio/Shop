@@ -150,60 +150,6 @@
     .compare-note a { color: var(--purple-light); text-decoration: none; }
     .compare-note a:hover { text-decoration: underline; }
 
-    /* ── FAQ ── */
-    .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 720px; margin: 0 auto; }
-
-    .faq-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: var(--transition);
-    }
-
-    .faq-item:hover { border-color: rgba(139,92,246,0.2); }
-
-    .faq-q {
-      width: 100%;
-      text-align: left;
-      padding: 20px 24px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .faq-chevron {
-      width: 20px; height: 20px;
-      transition: transform 0.3s ease;
-      color: var(--purple-light);
-      flex-shrink: 0;
-    }
-
-    .faq-item.open .faq-chevron { transform: rotate(180deg); }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-
-    .faq-item.open .faq-a { max-height: 200px; }
-
-    .faq-a-inner {
-      padding: 0 24px 20px;
-      color: var(--text-secondary);
-      font-family: var(--font-text);
-      font-size: 0.88rem;
-      line-height: 1.75;
-    }
-
     @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .plan-pro { transform: scale(1); } }
   </style>
 </head>
@@ -293,77 +239,15 @@
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- ── FAQ ── -->
-  <section>
-    <div class="container">
-      <div class="fade-up" style="text-align:center; margin-bottom:48px;">
-        <div class="section-label">FAQ</div>
-        <h2>Common <span class="gradient-text">Questions</span></h2>
-      </div>
-      <div class="faq-list fade-up">
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            How do I get started?
-            <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">Join our Discord server using the link on this page, open a ticket, and describe your project. We'll get back to you within a few hours with a custom proposal.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Do you offer refunds?
-            <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">We work closely with clients throughout the process to ensure satisfaction. If we fail to deliver the agreed scope, a full refund is available. We stand behind our work.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Can I request services not listed here?
-            <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">Absolutely. We offer fully custom packages. Reach out via Discord and tell us what you need — we'll build a plan around your exact requirements and budget.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            How long does a typical project take?
-            <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">Delivery times are listed per plan (3–7 days). Complex custom projects may take longer. We always communicate timelines clearly upfront and keep you updated throughout.</div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            What payment methods do you accept?
-            <svg class="faq-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-a">
-            <div class="faq-a-inner">We accept PayPal, bank transfer, and select cryptocurrencies. Payment details are provided when you open a ticket. We typically require 50% upfront and 50% on delivery.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- CTA -->
   <section style="padding:80px 0; text-align:center;">
     <div class="container fade-up">
-      <h2 style="margin-bottom:16px;">Still Have <span class="gradient-text">Questions</span>?</h2>
-      <p style="color:var(--text-secondary); margin-bottom:32px; font-family:var(--font-text);">Our team is active on Discord and ready to help.</p>
-      <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-primary">Join Our Discord →</a>
+      <h2 style="margin-bottom:16px;">Need Something <span class="gradient-text">Custom</span>?</h2>
+      <p style="color:var(--text-secondary); margin-bottom:20px; font-family:var(--font-text);">Our team is active on Discord and ready to build around your exact needs.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-primary">Join Our Discord →</a>
+        <a href="faq.html" class="btn btn-outline">View FAQ</a>
+      </div>
     </div>
   </section>
 
@@ -371,13 +255,6 @@
 
 <script src="components.js"></script>
 <script src="main.js"></script>
-<script>
-  function toggleFaq(btn) {
-    const item = btn.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  }
-</script>
+
 </body>
 </html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Moonboy Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── Subtle page glow ── */
+    .faq-bg-glow {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 40%, rgba(139,92,246,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 65%, rgba(59,130,246,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Accordion wrapper ── */
+    .faq-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Single accordion item ── */
+    .acc-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 12px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* Left accent bar — revealed on open */
+    .acc-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--purple), var(--blue));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .acc-item:hover {
+      border-color: rgba(139,92,246,0.25);
+    }
+
+    .acc-item.open {
+      border-color: rgba(139,92,246,0.4);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35), 0 0 25px rgba(139,92,246,0.1);
+    }
+
+    .acc-item.open::before { opacity: 1; }
+
+    /* ── Question row ── */
+    .acc-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 26px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.25s ease;
+      pointer-events: none; /* parent handles click */
+    }
+
+    .acc-trigger-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    /* Numbered pill */
+    .acc-num {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--purple-light);
+      background: rgba(139,92,246,0.1);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 8px;
+      padding: 4px 9px;
+      min-width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .acc-item.open .acc-num {
+      background: rgba(139,92,246,0.18);
+      border-color: rgba(139,92,246,0.45);
+    }
+
+    .acc-question {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.45;
+      transition: color 0.25s ease;
+    }
+
+    .acc-item.open .acc-question { color: var(--purple-light); }
+
+    /* Animated chevron */
+    .acc-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(139,92,246,0.08);
+      border: 1px solid rgba(139,92,246,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+    }
+
+    .acc-icon svg {
+      width: 14px; height: 14px;
+      color: var(--purple-light);
+    }
+
+    .acc-item.open .acc-icon {
+      background: rgba(139,92,246,0.18);
+      border-color: rgba(139,92,246,0.4);
+      transform: rotate(180deg);
+    }
+
+    /* ── Answer panel — CSS grid trick for smooth height ── */
+    .acc-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .acc-item.open .acc-body { grid-template-rows: 1fr; }
+
+    .acc-body-inner { overflow: hidden; }
+
+    .acc-answer {
+      padding: 18px 26px 24px calc(26px + 36px + 16px);
+      color: var(--text-secondary);
+      font-family: var(--font-text);
+      font-size: 0.93rem;
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Bottom CTA ── */
+    .faq-cta {
+      max-width: 760px;
+      margin: 52px auto 0;
+      background: linear-gradient(135deg, rgba(88,101,242,0.1), rgba(124,58,237,0.07));
+      border: 1px solid rgba(88,101,242,0.28);
+      border-radius: var(--radius-lg);
+      padding: 44px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .faq-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(88,101,242,0.6), transparent);
+    }
+
+    .faq-cta h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .faq-cta p  { color: var(--text-secondary); font-family: var(--font-text); font-size: 0.9rem; line-height: 1.6; }
+
+    @media (max-width: 640px) {
+      .acc-trigger { padding: 18px; }
+      .acc-answer  { padding: 16px 18px 20px 18px; }
+      .faq-cta     { padding: 32px 24px; flex-direction: column; text-align: center; }
+      .faq-cta .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="faq-bg-glow"></div>
+
+<div id="main-content" class="main">
+
+  <!-- ── Page Hero ── -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label fade-up">FAQ</div>
+      <h1 class="fade-up delay-1">Frequently Asked <span class="gradient-text">Questions</span></h1>
+      <p class="fade-up delay-2" style="color:var(--text-secondary); max-width:500px; margin:20px auto 0; font-family:var(--font-text); font-size:1.05rem; line-height:1.8;">Everything you need to know about Moonboy Studio. Still have questions? Hit us up on Discord.</p>
+    </div>
+  </section>
+
+  <!-- ── Accordion ── -->
+  <section style="padding-top:20px; padding-bottom:100px;">
+    <div class="container">
+      <div class="faq-wrapper">
+
+        <div class="acc-item fade-up" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">01</span>
+              <span class="acc-question">What services does Moonboy Studio provide?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">We provide Discord server setup, tournament website development, poster design, and video editing services.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up delay-1" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">02</span>
+              <span class="acc-question">How do I get started?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">Simply join our Discord server and contact us to discuss your project.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up delay-2" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">03</span>
+              <span class="acc-question">How long does a project take?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">Depending on the complexity, most projects take between a few days to one week.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up delay-3" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">04</span>
+              <span class="acc-question">Do you offer custom designs?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">Yes, all our services are customizable based on your needs and branding.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">05</span>
+              <span class="acc-question">How do payments work?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">Payments are discussed in our Discord and depend on the scope of the project.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up delay-1" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">06</span>
+              <span class="acc-question">Can you manage my Discord server after setup?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">Yes, we offer community management services as well.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up delay-2" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">07</span>
+              <span class="acc-question">Do you work with small creators?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">Yes, we support both small and large communities.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item fade-up delay-3" onclick="toggleAcc(this)">
+          <button class="acc-trigger">
+            <div class="acc-trigger-left">
+              <span class="acc-num">08</span>
+              <span class="acc-question">What makes Moonboy Studio different?</span>
+            </div>
+            <div class="acc-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="acc-answer">We focus on gaming communities and provide all-in-one solutions with a professional and modern approach.</div>
+          </div></div>
+        </div>
+
+        <!-- CTA Banner -->
+        <div class="faq-cta fade-up">
+          <div>
+            <h3>Still Have <span class="gradient-text">Questions?</span></h3>
+            <p>Our team is always active on Discord.<br>Open a ticket and we'll get back to you fast.</p>
+          </div>
+          <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-primary">
+            Join Discord →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="components.js"></script>
+<script src="main.js"></script>
+<script>
+  /* One open at a time */
+  function toggleAcc(item) {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
