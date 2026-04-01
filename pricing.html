@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Moonboy Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Pricing Grid ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      position: relative;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+
+    .plan-starter::before { background: linear-gradient(90deg, #475569, #64748b); }
+    .plan-pro::before     { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+    .plan-ultimate::before{ background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+    .plan-pro {
+      border-color: rgba(139,92,246,0.35);
+      background: rgba(139,92,246,0.05);
+      transform: scale(1.03);
+      box-shadow: 0 0 60px rgba(139,92,246,0.15), 0 20px 60px rgba(0,0,0,0.4);
+    }
+
+    .pricing-card:hover:not(.plan-pro) {
+      border-color: rgba(139,92,246,0.2);
+      transform: translateY(-4px);
+    }
+
+    .plan-pro:hover { box-shadow: 0 0 80px rgba(139,92,246,0.25), 0 30px 70px rgba(0,0,0,0.5); }
+
+    /* Popular badge */
+    .popular-badge {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: linear-gradient(135deg, var(--purple), #6366f1);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      box-shadow: 0 0 15px rgba(139,92,246,0.5);
+    }
+
+    /* Plan header */
+    .plan-name {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .plan-price {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .plan-starter .plan-price { color: var(--text-secondary); }
+    .plan-pro .plan-price     { background: linear-gradient(135deg, var(--purple-light), var(--blue-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .plan-ultimate .plan-price{ background: linear-gradient(135deg, var(--blue-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .plan-price-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: var(--font-text);
+      margin-bottom: 24px;
+    }
+
+    .plan-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-family: var(--font-text);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Feature list */
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-family: var(--font-text);
+      line-height: 1.5;
+    }
+
+    .check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .plan-starter .check { background: rgba(100,116,139,0.15); border: 1px solid rgba(100,116,139,0.3); color: #64748b; }
+    .plan-pro .check     { background: rgba(139,92,246,0.15);  border: 1px solid rgba(139,92,246,0.3);  color: var(--purple-light); }
+    .plan-ultimate .check{ background: rgba(59,130,246,0.15);  border: 1px solid rgba(59,130,246,0.3);  color: var(--blue-light); }
+
+    .plan-cta { width: 100%; text-align: center; justify-content: center; }
+
+    /* ── Comparison note ── */
+    .compare-note {
+      text-align: center;
+      margin-top: 48px;
+      color: var(--text-muted);
+      font-family: var(--font-text);
+      font-size: 0.88rem;
+    }
+
+    .compare-note a { color: var(--purple-light); text-decoration: none; }
+    .compare-note a:hover { text-decoration: underline; }
+
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .plan-pro { transform: scale(1); } }
+  </style>
+</head>
+<body>
+
+<div id="main-content" class="main">
+
+  <!-- ── Page Hero ── -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label fade-up">Pricing</div>
+      <h1 class="fade-up delay-1">Simple, <span class="gradient-text">Transparent</span> Pricing</h1>
+      <p class="fade-up delay-2" style="color:var(--text-secondary); max-width:500px; margin:20px auto 0; font-family:var(--font-text); font-size:1.05rem; line-height:1.8;">Choose the plan that fits your community size and goals. No hidden fees, no surprises.</p>
+    </div>
+  </section>
+
+  <!-- ── Pricing Cards ── -->
+  <section>
+    <div class="container">
+      <div class="pricing-grid">
+
+        <!-- Starter -->
+        <div class="pricing-card plan-starter fade-up">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">$49</div>
+          <div class="plan-price-note">One-time setup fee</div>
+          <div class="plan-desc">Perfect for new tournament organizers and small gaming communities just getting started with a professional setup.</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span>Basic Discord server setup</li>
+            <li><span class="check">✓</span>Up to 10 channels</li>
+            <li><span class="check">✓</span>Role system configuration</li>
+            <li><span class="check">✓</span>1 bot integration</li>
+            <li><span class="check">✓</span>Server banner & icon</li>
+            <li><span class="check">✓</span>3-day delivery</li>
+            <li><span class="check">✓</span>1 revision round</li>
+          </ul>
+          <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-outline plan-cta">Get Started</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card plan-pro fade-up delay-1">
+          <div class="popular-badge">Most Popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$149</div>
+          <div class="plan-price-note">One-time setup fee</div>
+          <div class="plan-desc">The complete solution for serious tournament organizers who need a full professional setup with website and branding.</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span>Full Discord server setup</li>
+            <li><span class="check">✓</span>Unlimited channels & roles</li>
+            <li><span class="check">✓</span>3 bot integrations</li>
+            <li><span class="check">✓</span>Tournament website (landing page)</li>
+            <li><span class="check">✓</span>Poster design (2 templates)</li>
+            <li><span class="check">✓</span>Brand logo design</li>
+            <li><span class="check">✓</span>5-day delivery</li>
+            <li><span class="check">✓</span>3 revision rounds</li>
+            <li><span class="check">✓</span>Priority Discord support</li>
+          </ul>
+          <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-primary plan-cta">Get Started →</a>
+        </div>
+
+        <!-- Ultimate -->
+        <div class="pricing-card plan-ultimate fade-up delay-2">
+          <div class="plan-name">Ultimate</div>
+          <div class="plan-price">$299</div>
+          <div class="plan-price-note">One-time setup fee</div>
+          <div class="plan-desc">The full Moonboy Studio experience. Everything we offer, delivered end-to-end for established esports organizations.</div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span>Everything in Pro</li>
+            <li><span class="check">✓</span>Full tournament website + bracket system</li>
+            <li><span class="check">✓</span>Player registration system</li>
+            <li><span class="check">✓</span>Full brand identity kit</li>
+            <li><span class="check">✓</span>5 custom poster designs</li>
+            <li><span class="check">✓</span>1 promotional video edit</li>
+            <li><span class="check">✓</span>Discord server management (1 month)</li>
+            <li><span class="check">✓</span>7-day delivery</li>
+            <li><span class="check">✓</span>Unlimited revisions</li>
+            <li><span class="check">✓</span>Dedicated account manager</li>
+          </ul>
+          <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-outline plan-cta">Get Started</a>
+        </div>
+
+      </div>
+
+      <div class="compare-note fade-up">
+        Need something custom? <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener">Contact us on Discord</a> for a custom quote.
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:80px 0; text-align:center;">
+    <div class="container fade-up">
+      <h2 style="margin-bottom:16px;">Need Something <span class="gradient-text">Custom</span>?</h2>
+      <p style="color:var(--text-secondary); margin-bottom:20px; font-family:var(--font-text);">Our team is active on Discord and ready to build around your exact needs.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="https://discord.gg/uCGvsjTVT5" target="_blank" rel="noopener" class="btn btn-primary">Join Our Discord →</a>
+        <a href="faq.html" class="btn btn-outline">View FAQ</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="components.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
